@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Kanban Board</title>
+
+  <style>
+    body {
+      background-color: #eeeeee;
+      padding: 30px
+    }
+
+    h1 {
+      color: #222831;
+      font-family: Futura, sans-serif;
+      text-align: center;
+      font-size: 40px
+    }
+
+    h2 {
+      color: #00adb5;
+      font-family: Futura, sans-serif;
+      text-align: center;
+    }
+
+    h3 {
+      color: #393e46;
+      font-family: Futura, sans-serif;
+      font-weight: normal;
+      text-align: center;
+    }
+
+    h4 {
+      color: #D0D0D0;
+      font-family: Futura, sans-serif;
+      font-weight: normal;
+      text-align: center;
+      font-size: 15px
+    }
+
+    div {
+      color: #393e46;
+      font-family: Futura, sans-serif
+    }
+
+    a {
+      text-decoration: none;
+      text-align: right
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 10px;
+      text-align: right
+    }
+
+    li {
+      color: #ffffff;
+      font-family: Futura, sans-serif;
+      text-align: left;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 0px;
+      background: #00adb5
+    }
+
+    input[type=text] {
+      color: #393e46;
+      font-family: Futura, sans-serif;
+      font-size: 16px;
+      font-weight: normal;
+      font-weight: normal;
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      border: none;
+      background-color: #eeeeee;
+      box-sizing: border-box;
+    }
+
+    input[type=button],
+    input[type=submit],
+    input[type=reset] {
+      font-family: Futura, sans-serif;
+      font-size: 16px;
+      font-weight: normal;
+      background-color: #00adb5;
+      border: none;
+      color: white;
+      padding: 8px 20px;
+      text-decoration: none;
+      margin: 8px 0;
+      cursor: pointer;
+    }
+
+    .column {
+      float: left;
+      width: 33.33%
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+  </style>
+</head>
+
+
+<body>
+  <h1>Hello, Elena!</h1>
+  <h3>Welcome to the Ultimate Procrastination Killer Platform.</h3>
+  {% if select %}
+  <h1 style=font-size:35px> Go Do: {{ task_id }} <a href="{{url_for('random_select')}}"> 🎲</a></h1>
+  {% endif %}
+  <br>
+  <br>
+
+
+  <div class="row">
+    <div class="column">
+      <h2>To Do 🙁</h2>
+      <ul>
+        {% for todo in incomplete %}
+        <li>{{todo.text}} </li>
+        <a href="{{url_for('delete',id=todo.id)}}">👋🏼</a>
+        <a href="{{url_for('doing',id=todo.id)}}"> 👉🏼</a>
+        {% endfor %}
+
+        <li style=background-color:white>
+          <div style=text-align:left>Add a new todo item:
+            <form action="{{url_for('add')}}" method="POST">
+              <input type="text" name="todoitem">
+              <input type="submit" value="Add">
+            </form>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+
+    <div class="column">
+      <h2>In Progress 🤓</h2>
+      <ul>
+        {% for todo in doing %}
+        <li>{{todo.text}} </li>
+        <a href="{{url_for('delete',id=todo.id)}}">👋🏼</a>
+        <a href="{{url_for('incomplete',id=todo.id)}}"> 👈🏼</a>
+        <a href="{{url_for('complete',id=todo.id)}}">👉🏼</a>
+        {% endfor %}
+      </ul>
+    </div>
+
+
+    <div class="column">
+      <h2>Done 🥳</h2>
+      <ul>
+        {% for todo in complete %}
+        <li>{{todo.text}}</li>
+        <a href="{{url_for('delete',id=todo.id)}}">👋🏼</a>
+        <a href="{{url_for('doing',id=todo.id)}}"> 👈🏼</a>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <br><br><br><br><br>
+
+  <h2>Don't know where to start? </h2>
+  <h3>Click the dice and let me choose for you!</h3>
+  <h3><a href="{{url_for('random_select')}}" style=font-size:70px> 🎲</a></h3>
+
+  <br><br><br><br><br>
+
+  <h2>Need a nice background music? </h2>
+  <h3>Listen to this live music!
+    <br><br>
+    <iframe width="665" height="374" src="https://www.youtube.com/embed/P7X5u3itLb0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    </iframe>
+  </h3>
+
+  <br><br><br><br><br>
+
+  <h2>Still don't want to work? </h2>
+  <h3>Watch my video on time management!
+    <br>
+    <br>
+    <iframe width="665" height="374" align=center src="https://www.youtube.com/embed/RBoHXspYESY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    </iframe>
+  </h3>
+  <br>
+
+  <h4>©2020 Elena Cai<h4>
+</body>
+
+</html>
